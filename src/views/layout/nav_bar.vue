@@ -196,6 +196,7 @@ export default {
     left:0;
     box-shadow: 0 0 8px 2px #e0e0e0;
     z-index: 10;
+    animation: show_nav_menu 1s ease;
     .fixed_menu{
         float: left;
         width: 90%;
@@ -203,8 +204,14 @@ export default {
     .el-menu {
         padding: 0 15%;
     }
-    
 }
+
+@keyframes show_nav_menu{
+    0% { top: -60px; }
+    50% { top: -10px; }
+    100% { top: 0; }
+}
+
 .fixed_logo{
     float: left;
     width: 10%;
