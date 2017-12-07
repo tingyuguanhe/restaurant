@@ -1,1 +1,2 @@
-export const STATIC_IMAGEPATH = "/static/banner/";
+export const staticBannerImgPath = "/static/banner/";
+export const staticFoodImgPath = "/static/food/";
