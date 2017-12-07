@@ -20,10 +20,10 @@
 .footer{
     .erwei_code{
         margin: 70px auto;
-        width: 200px;
-        height: 200px;
+        width: 180px;
+        height: 180px;
         border-radius: 25%;
-        background-color: #f0f;
+        background-color: #fff;
         overflow: hidden;
     }
     ul{

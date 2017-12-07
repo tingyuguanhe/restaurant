@@ -2,31 +2,30 @@
   <div class="layout_nav" ref="abc">
       <div class="head_top">  
         <ul class="top clearfix">
-                <li>
-                    <div class="search_icon" @click="show_search_input">
-                        <i class="el-icon-search"></i>
-                    </div> 
-                    <div v-if="search_input_show" class="search_input">
-                        <el-input v-model="input5" placeholder="请输入内容"></el-input>
-                        <i class="el-icon-close" @click="hide_search_input"></i>
-                    </div>
-                    
-                </li>
-                <li>
-                    <ul class="top_right f14 clearfix">
-                        <li>登录</li>
-                        <li>注册</li>   
-                        <li class="shopping_cart">
-                            <div class="cart_icon">   
-                                <span class="glyphicon glyphicon-shopping-cart"></span>
-                                <b>99</b>
-                            </div>
-                            <div class="cart_box">
-                                哇！您的购物车太干净了
-                            </div>
-                        </li>     
-                    </ul>
-                </li>
+            <li>
+                <div class="search_icon" @click="show_search_input">
+                    <i class="el-icon-search"></i>
+                </div> 
+                <div v-if="search_input_show" class="search_input">
+                    <el-input v-model="search_input" placeholder="请输入内容"></el-input>
+                    <i class="el-icon-close" @click="hide_search_input"></i>
+                </div>
+            </li>
+            <li>
+                <ul class="top_login f14 clearfix">
+                    <li>登录</li>
+                    <li>注册</li>   
+                    <li class="shopping_cart">
+                        <div class="cart_icon">   
+                            <span class="glyphicon glyphicon-shopping-cart"></span>
+                            <b>99</b>
+                        </div>
+                        <div class="cart_box">
+                            哇！您的购物车太干净了
+                        </div>
+                    </li>     
+                </ul>
+            </li>
         </ul>
         <div class="logo">
             <img src="../../assets/logo.png" width="20%" alt="">
@@ -34,6 +33,7 @@
       </div>
       <transition name="el-zoom-in-top">
         <header class="header_nav" :class="{'nav_bar_fixed': navBarFixed}">
+            <!-- 置顶logo -->
             <a href="javascript:;" class="fixed_logo" v-if="navBarFixed"><img src="../../assets/logo.png" width="100%" alt=""></a>
             <el-menu :default-active="activeIndex" class="el-menu-demo fixed_menu" mode="horizontal" active-text-color="#ff5900"
             @select="handleSelect">
@@ -48,6 +48,28 @@
                 <el-menu-item index="4">顾客推荐</el-menu-item>
                 <el-menu-item index="5">联系我们</el-menu-item>
             </el-menu>
+            <!-- 置顶登录 -->
+            <ul v-if="navBarFixed" class="top_login f14 clearfix">
+                <li class="search_li">
+                   
+                    <i class="el-icon-search" @click="show_search_input"></i>
+                    <div v-if="search_input_show" class="search_input">
+                        <el-input v-model="search_input" placeholder="请输入内容"></el-input>
+                        <i class="el-icon-close" @click="hide_search_input"></i>
+                    </div>
+                </li>
+                <li>登录</li>
+                <li>注册</li>   
+                <li class="shopping_cart">
+                    <div class="cart_icon">   
+                        <span class="glyphicon glyphicon-shopping-cart"></span>
+                        <b>99</b>
+                    </div>
+                    <div class="cart_box">
+                        哇！您的购物车太干净了
+                    </div>
+                </li>     
+            </ul>
         </header>
       </transition>
   </div>
@@ -59,7 +81,7 @@ export default {
       return{
         activeIndex: '1',
         activeIndex2: '1',
-        input5:'',
+        search_input:'',
         search_input_show: false,
         navBarFixed: false
       }
@@ -76,12 +98,13 @@ export default {
       },
       hide_search_input(){
           this.search_input_show = false;
+          this.search_input = '';
       },
       handleScroll () {
         var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
-        console.log(scrollTop)
+        //console.log(scrollTop)
         var offsetTop = this.$refs.abc.offsetHeight;
-        console.log(offsetTop);
+        //console.log(offsetTop);
         if (scrollTop > offsetTop) {
             this.navBarFixed = true
         } else {
@@ -98,34 +121,12 @@ export default {
 .top{
     height: 65px;
     padding: 15px 0;
-    .top_right{
-        float: right;
-        padding: 14px 0;
-        li{
-            margin-right: 25px;
-        }
-    }
+    
     >li{
         width: 50%;
     }
-    .el-icon-close,.el-icon-search{
-        font-size: 1.4rem;
-        cursor: pointer;  
-    }
-    .el-icon-close{
-        position: absolute;
-        top: 10px;
-        right: -20px;
-        color:#9c9c9c;
-    }
-    .el-icon-close:hover{
-        color: #bbb;
-    }
-    .glyphicon-shopping-cart{
-        font-size: 16px;
-    }
     .search_icon{
-        padding: 10px 4px 0 10px;
+        padding: 10px 6px 10px 10px;
         float: left;
     }
     .search_input{
@@ -138,28 +139,13 @@ export default {
             width: 65%;
         }
     }
-
-    li.shopping_cart{
-        position: relative;
-    }
-    .cart_box{
-        width: 200px;
-        height: auto;
+    .el-icon-close{
         position: absolute;
-        right: -5px;
-        top: 28px;
-        padding: 16px;
-        z-index: 10;
-        border: 1px solid #d8dce5;
-        box-shadow: 0 0 10px 0 #d8dce5;
-        display: none;
+        top: 10px;
+        right: -20px;
+        color:#9c9c9c;
     }
-    li.shopping_cart:hover .cart_box{
-        display: block;
-    }
-    .cart_icon{
-        cursor: pointer;
-    }
+    
     .logo{
         height: 120px;
         overflow: hidden;
@@ -169,8 +155,58 @@ export default {
     }
 }
 
+.el-icon-close,.el-icon-search{
+    font-size: 1.4rem;
+    cursor: pointer;  
+}
+
+.el-icon-close:hover{
+    color: #bbb;
+}
+.glyphicon-shopping-cart{
+    font-size: 16px;
+}
+    
+    
+.top_login{
+    float: right;
+    li{
+        margin-right: 25px;
+        height: 40px;
+        line-height: 40px;
+    }
+    li:last-child{
+        margin-right: 15px; 
+    }
+}
+li.shopping_cart{
+        position: relative;
+    }
+    .cart_box{
+        width: 200px;
+        height: auto;
+        position: absolute;
+        right: -8px;
+        top: 38px;
+        padding: 10px 15px;
+        z-index: 10;
+        border: 1px solid #d8dce5;
+        box-shadow: 0 0 10px 0 #d8dce5;
+        border-radius: 2px;
+        display: none;
+        background-color: #fff;
+    }
+    li.shopping_cart:hover .cart_box{
+        display: block;
+    }
+    .cart_icon{
+        cursor: pointer;
+    }
+
 .header_nav{
     background-color: #fff;
+    height: 70px;
+    padding: 10px 0 0 0;
     .el-menu{
         padding: 0 22%;
     }
@@ -196,13 +232,40 @@ export default {
     left:0;
     box-shadow: 0 0 8px 2px #e0e0e0;
     z-index: 10;
-    animation: show_nav_menu 1s ease;
+    animation: show_nav_menu 1s linear;
     .fixed_menu{
         float: left;
-        width: 90%;
+        width: 70%;
     }
     .el-menu {
-        padding: 0 15%;
+        padding: 0 7% 0 12%;
+    }
+    .top_login {
+        margin: 0;
+        li{
+            height: 60px;
+            line-height: 60px;
+        }
+    }
+    .cart_box{
+        top:50px;
+    }
+    .search_li{
+        position: relative;
+    }
+    .search_input{
+        position: absolute;
+        top: 60px;
+        background-color: #fff;
+        padding: 0 8px 0 12px;
+        height: 72px;
+        line-height: 72px;
+        width: 230px;
+        right: -10px;
+        box-shadow: 0 1px 1px 0 #e0e0e0;
+        .el-input{
+            width: 88%;
+        }
     }
 }
 

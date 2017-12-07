@@ -29,7 +29,7 @@ const indexBreadcrumb = {name: '首页', href: '/'};
           component: list,
           meta:{
             title: '列表页',
-            breadcrumbs:[{name: indexBreadcrumb.name, href: indexBreadcrumb.href},{name:'案件处理'}]
+            breadcrumbs:[{name: indexBreadcrumb.name, href: indexBreadcrumb.href},{name:'列表页'}]
           }
         }
       ]
