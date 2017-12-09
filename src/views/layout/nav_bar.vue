@@ -207,8 +207,10 @@ li.shopping_cart{
     background-color: #fff;
     height: 70px;
     padding: 10px 0 0 0;
-    .el-menu{
-        padding: 0 22%;
+    .el-menu--horizontal{
+        min-width: 660px;
+        width: 560px;
+        margin: 0 auto;
     }
     .el-submenu .el-menu-item{
         text-align: left;
@@ -216,7 +218,7 @@ li.shopping_cart{
     }   
     .el-menu-item{
         padding: 0 6%;
-        font-size: 1.3rem;
+        font-size: 1.2rem;
     }
     .el-menu--horizontal .el-submenu>.el-menu{
         top: 60px;

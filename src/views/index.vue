@@ -136,7 +136,7 @@ export default {
     .img_box {
         cursor: pointer;
         img:hover{
-            opacity: 0.3;
+            opacity: 0.6;
         }
         
     }
