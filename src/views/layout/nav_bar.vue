@@ -364,7 +364,11 @@ li.shopping_cart{
         }
     }
 }
-
+.el-carousel__container{
+    min-height: 560px;
+    height: 600px;
+    max-height: 600px;
+}
 @keyframes show_nav_menu{
     0% { top: -60px; }
     50% { top: -10px; }
@@ -404,7 +408,19 @@ li.shopping_cart{
         right:-20px;
         color: #9c9c9c;
     }
-    
+    .head_top{
+        .top{
+            position: fixed;
+            width: 100%;
+            left: 0;
+            top: 0;
+            background: #fff;
+            z-index: 100;
+        }
+    }
+    .logo{
+        display: none;
+    }
 
 }
 </style>

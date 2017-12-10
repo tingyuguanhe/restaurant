@@ -1,26 +1,40 @@
 <template>
-  <div class="list main_content">
-      <el-row>
-          <el-col :span="4">
-                <div class="breadcrumb breadcrumb_source" v-if="!!$route.meta.breadcrumbs">
-                    <el-breadcrumb separator-class="el-icon-arrow-right">
-                        <el-breadcrumb-item v-for="(breadcrumb,index) in $route.meta.breadcrumbs" :to="breadcrumb.href" :key="index">
-                            {{breadcrumb.name}}
-                        </el-breadcrumb-item>
-                    </el-breadcrumb>
-                </div>
-          </el-col>
-          <el-col :span="19" :offset="1">
+  <div class="list">
+      <div class="app_list_menu">
+        <el-menu :default-active="default_active_menu" mode="horizontal" class="el-menu-demo search_menu" 
+                    active-text-color="#ff5900" @select="handleSelect"
+                    @open="handleOpen" @close="handleClose">
+                <template v-for="(item,index) in list_menu" >
+                    <template  v-if="item.children.length == 0">
+                        <el-menu-item :index="item.index" :key="index">
+                            <span slot="title">{{item.name}}</span>
+                        </el-menu-item>
+                    </template>
+                    <template v-else>
+                        <el-submenu :index="item.index">
+                            <template slot="title">
+                                <i class="el-icon-location"></i>
+                                <span>{{item.name}}</span>
+                            </template>
+                            <el-menu-item-group v-for="(child,indx) in item.children">                     
+                                <el-menu-item :index="child.index" :key="index">{{child.name}}</el-menu-item>                                    
+                            </el-menu-item-group>
+                        </el-submenu>
+                    </template>    
+                </template>                    
+            </el-menu>
+        </div>
+      <div class="main_content">
+      
+      <div class="list_filter_ul clearfix">
+          
               <el-row class="filter_items">
-                  <el-col :span="1" class="filter_txt">
-                    <div>排序：</div>
-                  </el-col>
-                  <el-col class="filter_bg" :span="1">
+                  <el-col class="filter_bg" :span="2">
                       <div @click="sortBy('complex')">
                           <span :class="{'active':complex}">综合</span>
                       </div>
                   </el-col>
-                  <el-col class="filter_bg" :span="1">
+                  <el-col class="filter_bg" :span="2">
                     <div class="has_icon" @click="sortBy('sale')">
                         <span :class="{'active': sale}">销量</span>
                         <i class="i_first el-icon-caret-top" :class="{'sale_active':sale && !sale_active}"></i> 
@@ -28,7 +42,7 @@
                     </div>
                     
                   </el-col>
-                  <el-col class="filter_bg" :span="1">
+                  <el-col class="filter_bg" :span="2">
                     <div class="has_icon" @click="sortBy('price')">
                         <span :class="{'active': price}">价格</span> 
                         <i class="i_first el-icon-caret-top" :class="{'price_active':price && price_active == true}"></i> 
@@ -46,12 +60,12 @@
                     </div>
                   </el-col>
               </el-row>
-          </el-col>
-      </el-row>
+         
+      </div>
       
     <div class="">
         <el-row>
-            <el-col :span="4">
+            <el-col class="pc_list_menu" :span="4">
                 <h5>类别：</h5>
                 <el-menu :default-active="default_active_menu" class="el-menu-vertical-demo search_menu" 
                 active-text-color="#ff5900" @select="handleSelect"
@@ -98,7 +112,7 @@
             </el-col>
         </el-row>
     </div>
-    
+    </div>
   </div>
 </template>
 <script>
@@ -243,9 +257,7 @@ export default {
 <style lang="scss" scoped>
 @import url('../style/common.css');
 
-.breadcrumb{
-    background-color:transparent;
-}
+
 
 h5{
     text-align:left;
@@ -261,16 +273,23 @@ h5{
 .main_content{
     padding:20px 4%;
 }
-.search_menu li{
-    width:100%;
-    text-align: left;
+.pc_list_menu{
+    .search_menu{
+        border: none;
+        li{
+            width:100%;
+            text-align: left;
+        }
+    }
+ 
 }
+   
 .el-menu-item-group__title{
     color:#f600ff;
     font-weight: 700;
 }
 .el-menu-item:focus, .el-menu-item:hover,.el-submenu__title:hover{
-    background-color: #2b1400;
+    background-color: transparent;
     color:#ff5900;
     i{
         color:#ff5900;
@@ -323,8 +342,8 @@ h5{
 .filter_items {
     color:#777;
     font-size:14px;
-    >div.el-col-1{
-        width:6.4%;
+    >div{
+        // width:10%;
             
             position:relative;
         >div{
@@ -345,12 +364,8 @@ h5{
         div.has_icon{
             text-align:left;
             padding: 5px 14px;
-        }
-        
-        
+        }  
     }
-    
-    
     .filter_bg{
         background-color:#fff;
         margin-right:10px;
@@ -358,11 +373,6 @@ h5{
         span.active{
             color:#ff5900;
         }
-    }
-    
-    div.filter_txt{
-        background-color:transparent;
-        text-align:left;
     }
 
     label,.product_num{
@@ -374,7 +384,34 @@ h5{
     }
   
 }
-
+.app_list_menu{
+    display: none;
+}
+@media screen and (max-width:600px){
+    .el-col-2{
+        width: 16%;
+    }
+    .filter_items > div div.has_icon{
+        padding: 5px 8px;
+    }
+    .app_list_menu{
+        display: block;
+        margin: 0 0 15px 0;
+        position: fixed;
+        width: 100%;
+        top: 50px;
+        z-index: 10;
+    }
+    .pc_list_menu{
+        display: none;
+    }
+    .el-col-19{
+        width:100%;
+    }
+   .el-col-offset-1{
+       margin-left: 0; 
+   }
+}
 
 </style>
 
