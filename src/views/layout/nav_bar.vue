@@ -3,12 +3,18 @@
       <div class="head_top">  
         <ul class="top clearfix">
             <li>
-                <div class="search_icon" @click="show_search_input">
-                    <i class="el-icon-search"></i>
-                </div> 
-                <div v-if="search_input_show" class="search_input">
-                    <el-input v-model="search_input" placeholder="请输入内容"></el-input>
-                    <i class="el-icon-close" @click="hide_search_input"></i>
+                <div class="vertical_nav">
+                    <i class="glyphicon glyphicon-menu-hamburger"></i>
+                </div>
+                
+                <div class="pc_search">
+                    <div class="search_icon" @click="show_search_input">
+                        <i class="el-icon-search"></i>
+                    </div> 
+                    <div v-if="search_input_show" class="search_input">
+                        <el-input v-model="search_input" placeholder="请输入内容"></el-input>
+                        <i class="el-icon-close" @click="hide_search_input"></i>
+                    </div>
                 </div>
             </li>
             <li>
@@ -27,6 +33,33 @@
                 </ul>
             </li>
         </ul>
+        <div class="app_search clearfix">
+            <div class="search_icon" @click="show_search_input">
+                <i class="el-icon-search"></i>
+            </div> 
+            <div v-if="search_input_show" class="search_input">
+                <el-input v-model="search_input" placeholder="请输入内容"></el-input>
+                <i class="el-icon-close" @click="hide_search_input"></i>
+            </div>
+        </div>
+        <div class="position_left_nav">
+            <div class="left_nav_box">
+                <el-menu :default-active="activeIndex" class="el-menu-demo fixed_menu" default-active="#fff"
+                active-text-color="#ff5900"
+                @select="handleSelect">
+                    <el-menu-item index="1">首页</el-menu-item>
+                    <el-submenu index="2">
+                        <template slot="title">所有滋味</template>
+                        <el-menu-item index="2-1">主食</el-menu-item>
+                        <el-menu-item index="2-2">果汁</el-menu-item>
+                        <el-menu-item index="2-3">酒水</el-menu-item>
+                    </el-submenu>
+                    <el-menu-item index="3">美食日记</el-menu-item>
+                    <el-menu-item index="4">顾客推荐</el-menu-item>
+                    <el-menu-item index="5">联系我们</el-menu-item>
+                </el-menu>
+            </div>
+        </div>
         <div class="logo">
             <img src="../../assets/logo.png" width="20%" alt="">
         </div>
@@ -83,7 +116,8 @@ export default {
         activeIndex2: '1',
         search_input:'',
         search_input_show: false,
-        navBarFixed: false
+        navBarFixed: false,
+        fixed_left_nav_show: false
       }
   },
   mounted () {
@@ -110,56 +144,110 @@ export default {
         } else {
             this.navBarFixed = false
         }
-      }
+      },
+     
   }
 }
+
+$(function(){
+    $('.vertical_nav').bind('click',function(){
+        $('.position_left_nav').show();
+    })
+    
+    $(document).bind("click",function(e){ 
+        var target = $(e.target);
+        if(target.closest(".position_left_nav").length == 1){ 
+            $(".position_left_nav").hide(); 
+        } 
+    }) 
+}) 
+
 </script>
 
 <style lang="scss">
 @import url("../../style/common.css");
+.vertical_nav {
+    float: left;
+    display: none;
+    i{
+        font-size: 1.4rem;
+        padding: 10px 6px 10px 10px;
+    } 
+}
 
+.position_left_nav{
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 100%;
+    z-index: 100;
+    width: 100%;
+    background-color: transparent;
+    display: none;
+    .el-menu{
+        border: none;
+        text-align: left;
+        background-color: #d6d6d6;
+        
+    }
+    .left_nav_box{
+        width: 50%;
+        height: 100%;
+        background-color: #d6d6d6;
+    }
+    
+    li{
+        float: none;
+    }
+}
+.el-submenu .el-menu-item{
+    min-width: 100%;
+}
 .top{
-    height: 65px;
-    padding: 15px 0;
+    height: auto;
+    padding: 15px 0 0 0;
     
     >li{
         width: 50%;
     }
-    .search_icon{
-        padding: 10px 6px 10px 10px;
-        float: left;
-    }
-    .search_input{
-        width: 40%;
-        position: relative;
-        float: left;
-    }
-    @media screen and (max-width: 600px){
-        .search_input{
-            width: 65%;
-        }
-    }
-    .el-icon-close{
-        position: absolute;
-        top: 10px;
-        right: -20px;
-        color:#9c9c9c;
-    }
+    
     
     .logo{
         height: 120px;
         overflow: hidden;
     }
-    .head_top{
-        margin: 0 0 30px 0;
+    
+}
+.search_icon{
+    padding: 10px 6px 10px 10px;
+    float: left;
+}
+
+.search_input{
+    width: 40%;
+    position: relative;
+    float: left;
+}
+.app_search {
+    display: none;
+    .search_input{
+        width: 84%;
     }
 }
 
+.head_top{
+    margin: 0 0 20px 0;
+}
 .el-icon-close,.el-icon-search{
     font-size: 1.4rem;
     cursor: pointer;  
 }
-
+.el-icon-close{
+    position: absolute;
+    top: 10px;
+    right: -20px;
+    color:#9c9c9c;
+}
 .el-icon-close:hover{
     color: #bbb;
 }
@@ -205,16 +293,18 @@ li.shopping_cart{
 
 .header_nav{
     background-color: #fff;
-    height: 70px;
-    padding: 10px 0 0 0;
+    
+    padding: 0;
     .el-menu--horizontal{
         min-width: 660px;
         width: 560px;
         margin: 0 auto;
+        border:none;
     }
     .el-submenu .el-menu-item{
         text-align: left;
         padding: 0 20px;
+        min-width: 100%;
     }   
     .el-menu-item{
         padding: 0 6%;
@@ -222,9 +312,6 @@ li.shopping_cart{
     }
     .el-menu--horizontal .el-submenu>.el-menu{
         top: 60px;
-    }
-    .el-menu--horizontal{
-        border:none;
     }
 }
 .nav_bar_fixed{
@@ -254,6 +341,12 @@ li.shopping_cart{
     }
     .search_li{
         position: relative;
+        .el-icon-close{
+            position: absolute;
+            top: 30px;
+            right: 6px;
+            color:#9c9c9c;
+        }
     }
     .search_input{
         position: absolute;
@@ -262,11 +355,12 @@ li.shopping_cart{
         padding: 0 8px 0 12px;
         height: 72px;
         line-height: 72px;
-        width: 230px;
+        width: 240px;
         right: -10px;
         box-shadow: 0 1px 1px 0 #e0e0e0;
         .el-input{
             width: 88%;
+            margin: 0 15px 0 0;
         }
     }
 }
@@ -283,5 +377,34 @@ li.shopping_cart{
     height: 60px;
     z-index: 100;
     padding: 8px 0 0 10px;
+}
+
+@media screen and (max-width: 600px){
+    .header_nav{
+        display: none;
+    }
+    .el-carousel__container{
+        min-height: 180px;
+        height: 180px;
+        max-height: 200px;
+    }
+    .vertical_nav{
+        display: block;
+    }
+    .app_search{
+        display: block;
+        margin: 0 0 20px 0;
+    }
+    .pc_search{
+        display: none;
+    }
+    .el-icon-close {
+        position: absolute;
+        top: 10px;
+        right:-20px;
+        color: #9c9c9c;
+    }
+    
+
 }
 </style>

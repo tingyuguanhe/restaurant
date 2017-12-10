@@ -289,7 +289,7 @@ h5{
 }
 .img_item{
     overflow: hidden;
-    padding: 40px;
+    padding: 10%;
     background-color: #fff;  
 }
 .img_box {
@@ -316,7 +316,7 @@ h5{
     }
     .price{
         color: #ff5900;
-        font-size: 1.5rem;
+        font-size: 1.2rem;
     }
     
 }

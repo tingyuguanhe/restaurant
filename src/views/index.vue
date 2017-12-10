@@ -3,7 +3,7 @@
       <section>
             <!--轮播图-->
             <template>
-                <el-carousel :interval="4000" :autoplay="false" trigger="click" height="600px">
+                <el-carousel :interval="4000" :autoplay="false" trigger="click">
                     <el-carousel-item v-for="(item, key, index) in picList" :key="index">
                         <img :src="item.img" :alt="item.altstring" ref="img" width="100%">
                     </el-carousel-item>
@@ -124,13 +124,15 @@ export default {
 
 <style lang="scss">
 @import url("../style/common.css");
-
+h3{
+    font-size: 1.2rem;
+}
 .content{
     background-color: #f2f2f2;
     padding:0 0 100px 0;
     .img_item{
         overflow: hidden;
-        padding: 40px;
+        padding: 10%;
         background-color: #fff;  
     }
     .img_box {
@@ -162,7 +164,7 @@ export default {
         }
         .price{
             color: #ff5900;
-            font-size: 1.5rem;
+            font-size: 1.2rem;
         }
     }
     .more_link{

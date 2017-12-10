@@ -33,7 +33,7 @@
             handleScroll () {
                 var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
                 //console.log(scrollTop)
-                if (scrollTop > 600) {
+                if (scrollTop > 500) {
                     this.back_top_show = true
                 } else {
                     this.back_top_show = false
@@ -57,6 +57,13 @@
         background-color: #fff;
         overflow: hidden;
     }
+    @media screen and (max-width: 600px){
+        .erwei_code{
+            width: 28%;
+            height: 28%;
+        }
+        
+    }
     ul{
         width: 50%;
         margin: 0 auto;
@@ -64,8 +71,11 @@
             width: 33.33%;
             height: 60px;
             line-height: 60px;
-            font-size: 14px;
+            font-size: 1.1rem;
             font-weight: 600;
+            a{
+                color:#ff7124;
+            }
         }
     }
     .copy_right{
@@ -73,7 +83,12 @@
         span{
             margin:0 30px;
             color:#b1b1b1;
-            font-size: 13px;
+            font-size: 1rem;
+        }
+        @media screen and (max-width: 600px){
+            span{
+                margin:0 18%;
+            }
         }
     }
     .back_top{
@@ -85,9 +100,10 @@
         line-height: 45px;
         background-color: #444444;
         text-align: center;
-        font-size: 30px;
+        font-size: 3rem;
         color: #aaa;
         cursor:pointer;
+        border-radius: 50%;
     }
 }
 
