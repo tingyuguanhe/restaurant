@@ -1,7 +1,9 @@
 <template>
   <div class="list">
+      
       <div class="app_list_menu">
-        <el-menu :default-active="default_active_menu" mode="horizontal" class="el-menu-demo search_menu" 
+        <i class="el-icon-arrow-left pull-left" @click="go_history"></i>
+        <el-menu :default-active="default_active_menu" mode="horizontal" class="pull-left el-menu-demo search_menu" 
                     active-text-color="#ff5900" @select="handleSelect"
                     @open="handleOpen" @close="handleClose">
                 <template v-for="(item,index) in list_menu" >
@@ -248,6 +250,9 @@ export default {
         }else if(type == 'complex'){
             this.complex = true;
         }
+    },
+    go_history(){
+        window.history.go(-1);
     }
   }
 }
@@ -391,17 +396,30 @@ h5{
     .el-col-2{
         width: 16%;
     }
-    .filter_items > div div.has_icon{
-        padding: 5px 8px;
+    .filter_items > div{
+        div.has_icon{
+            padding: 5px 8px;
+            i{
+                right:5px;
+            }
+        }
+       
+        
     }
     .app_list_menu{
         display: block;
         margin: 0 0 15px 0;
         position: fixed;
         width: 100%;
-        top: 50px;
+        top: 0;
         z-index: 10;
+        .el-icon-arrow-left{
+            margin: 20px 10px 0 10px;
+            font-size: 20px;
+
+        }
     }
+    
     .pc_list_menu{
         display: none;
     }
@@ -411,6 +429,8 @@ h5{
    .el-col-offset-1{
        margin-left: 0; 
    }
+  
+   
 }
 
 </style>

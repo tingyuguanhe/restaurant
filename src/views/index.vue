@@ -124,6 +124,9 @@ export default {
 
 <style lang="scss">
 @import url("../style/common.css");
+.home{
+    margin: 60px 0 0 0;
+}
 h3{
     font-size: 1.2rem;
 }

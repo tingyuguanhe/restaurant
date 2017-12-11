@@ -1,13 +1,14 @@
 <template>
   <div class="layout_nav" ref="abc">
       <div class="head_top">  
-        <ul class="top clearfix">
-            <li>
+         
+        <!-- <ul class="top clearfix"> -->
+            <!-- <li>
                 <div class="vertical_nav">
                     <i class="glyphicon glyphicon-menu-hamburger"></i>
-                </div>
+                </div> -->
                 
-                <div class="pc_search">
+                <!-- <div class="pc_search">
                     <div class="search_icon" @click="show_search_input">
                         <i class="el-icon-search"></i>
                     </div> 
@@ -15,9 +16,9 @@
                         <el-input v-model="search_input" placeholder="请输入内容"></el-input>
                         <i class="el-icon-close" @click="hide_search_input"></i>
                     </div>
-                </div>
-            </li>
-            <li>
+                </div> -->
+            <!-- </li> -->
+            <!-- <li>
                 <ul class="top_login f14 clearfix">
                     <li>登录</li>
                     <li>注册</li>   
@@ -31,9 +32,9 @@
                         </div>
                     </li>     
                 </ul>
-            </li>
-        </ul>
-        <div class="app_search clearfix">
+            </li> -->
+        <!-- </ul> -->
+        <!-- <div class="app_search clearfix">
             <div class="search_icon" @click="show_search_input">
                 <i class="el-icon-search"></i>
             </div> 
@@ -41,11 +42,11 @@
                 <el-input v-model="search_input" placeholder="请输入内容"></el-input>
                 <i class="el-icon-close" @click="hide_search_input"></i>
             </div>
-        </div>
+        </div> -->
         <div class="position_left_nav">
             <div class="left_nav_box">
                 <el-menu :default-active="activeIndex" class="el-menu-demo fixed_menu" default-active="#fff"
-                active-text-color="#ff5900"
+                active-text-color="#ff5900" mode="horizontal"
                 @select="handleSelect">
                     <el-menu-item index="1">首页</el-menu-item>
                     <el-submenu index="2">
@@ -68,21 +69,18 @@
         <header class="header_nav" :class="{'nav_bar_fixed': navBarFixed}">
             <!-- 置顶logo -->
             <a href="javascript:;" class="fixed_logo" v-if="navBarFixed"><img src="../../assets/logo.png" width="100%" alt=""></a>
-            <el-menu :default-active="activeIndex" class="el-menu-demo fixed_menu" mode="horizontal" active-text-color="#ff5900"
+            <el-menu :default-active="activeIndex" class="el-menu-demo fixed_menu" mode="horizontal" v-if="show_head_nav"
+            active-text-color="#ff5900"
             @select="handleSelect">
-                <el-menu-item index="1">首页</el-menu-item>
-                <el-submenu index="2">
-                    <template slot="title">所有滋味</template>
-                    <el-menu-item index="2-1">主食</el-menu-item>
-                    <el-menu-item index="2-2">果汁</el-menu-item>
-                    <el-menu-item index="2-3">酒水</el-menu-item>
-                </el-submenu>
-                <el-menu-item index="3">美食日记</el-menu-item>
-                <el-menu-item index="4">顾客推荐</el-menu-item>
-                <el-menu-item index="5">联系我们</el-menu-item>
+                <el-menu-item index="1">所有店铺</el-menu-item>
+                <el-menu-item index="2">
+                   新闻公告
+                </el-menu-item>
+                <el-menu-item index="3">优惠活动</el-menu-item>
+                <el-menu-item index="4">商务合作</el-menu-item>
             </el-menu>
             <!-- 置顶登录 -->
-            <ul v-if="navBarFixed" class="top_login f14 clearfix">
+            <!-- <ul v-if="navBarFixed" class="top_login f14 clearfix">
                 <li class="search_li">
                    
                     <i class="el-icon-search" @click="show_search_input"></i>
@@ -102,7 +100,7 @@
                         哇！您的购物车太干净了
                     </div>
                 </li>     
-            </ul>
+            </ul> -->
         </header>
       </transition>
   </div>
@@ -117,11 +115,34 @@ export default {
         search_input:'',
         search_input_show: false,
         navBarFixed: false,
-        fixed_left_nav_show: false
+        fixed_left_nav_show: false,
       }
   },
   mounted () {
       window.addEventListener('scroll', this.handleScroll)
+  },
+
+  computed: {
+    show_head_nav(){
+        var path_name = this.$route.name
+        if(path_name == 'index'){
+            return true;
+        }
+        else{
+            return false;
+        }
+      
+    },
+    sys(){
+        var p = navigator.userAgent;
+        var Agents = /Android|iPhone|webOS|iPod/;
+        if(/Android|iPhone|webOS|iPod/i.test(p)){
+            return 'phone';
+        }else{
+            return 'pc';
+        }
+        
+    } 
   },
   methods: {
       handleSelect(key, keyPath) {
@@ -139,7 +160,9 @@ export default {
         //console.log(scrollTop)
         var offsetTop = this.$refs.abc.offsetHeight;
         //console.log(offsetTop);
-        if (scrollTop > offsetTop) {
+        
+        if (scrollTop > offsetTop && this.sys == 'pc') {
+
             this.navBarFixed = true
         } else {
             this.navBarFixed = false
@@ -149,18 +172,18 @@ export default {
   }
 }
 
-$(function(){
-    $('.vertical_nav').bind('click',function(){
-        $('.position_left_nav').show();
-    })
+// $(function(){
+//     $('.vertical_nav').bind('click',function(){
+//         $('.position_left_nav').show();
+//     })
     
-    $(document).bind("click",function(e){ 
-        var target = $(e.target);
-        if(target.closest(".position_left_nav").length == 1){ 
-            $(".position_left_nav").hide(); 
-        } 
-    }) 
-}) 
+//     $(document).bind("click",function(e){ 
+//         var target = $(e.target);
+//         if(target.closest(".position_left_nav").length == 1){ 
+//             $(".position_left_nav").hide(); 
+//         } 
+//     }) 
+// }) 
 
 </script>
 
@@ -215,6 +238,7 @@ $(function(){
     .logo{
         height: 120px;
         overflow: hidden;
+        margin-bottom: 20px 0;
     }
     
 }
@@ -235,9 +259,7 @@ $(function(){
     }
 }
 
-.head_top{
-    margin: 0 0 20px 0;
-}
+
 .el-icon-close,.el-icon-search{
     font-size: 1.4rem;
     cursor: pointer;  
@@ -385,7 +407,12 @@ li.shopping_cart{
 
 @media screen and (max-width: 600px){
     .header_nav{
-        display: none;
+        height: 60px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 10;
     }
     .el-carousel__container{
         min-height: 180px;
@@ -420,6 +447,17 @@ li.shopping_cart{
     }
     .logo{
         display: none;
+    }
+    .header_nav {
+        .el-menu--horizontal{
+            width: auto;
+            min-width: auto;
+        }
+        .el-menu-item{
+            padding: 0;
+            width: 25%;
+        }
+        
     }
 
 }
