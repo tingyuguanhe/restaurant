@@ -1,31 +1,32 @@
 <template>
-  <div class="home">
+  <div class="home_box">
       <section>
             <!--轮播图-->
             <template>
                 <el-carousel :interval="4000" :autoplay="false" trigger="click">
-                    <el-carousel-item v-for="(item, key, index) in picList" :key="index">
-                        <img :src="item.img" :alt="item.altstring" ref="img" width="100%">
+                    <el-carousel-item v-for="(item, index) in banners" :key="index">
+                        <a :href="item.url">
+                            <img :src="item.img" alt="img" ref="img" width="100%">
+                        </a>
                     </el-carousel-item>
                 </el-carousel>
             </template>
             <div class="content"> 
-               
                 <img src="../../static/title/title1.jpg" alt="" width="100%">
-                <div class="food_item">
+                <div class="food_item" v-for="item in types" :key="item.id">
                     <h3>CAKE 糕点</h3>
-                    <div class="more_link"><a href="javascript:;" @click="click_more('cake')">MORE+</a></div>
+                    <div class="more_link"><a href="javascript:;" @click="click_more(item.id)">MORE+</a></div>
                     <ul class="clearfix">
-                        <li v-for="item in cakeList" :key="item.id">
+                        <li v-for="food in item.shops" :key="food.id">
                             <div class="img_item">
                                 <div class="img_box">                             
-                                    <img :src="item.img" :alt="item.altstring" width="100%" alt="">
+                                    <img :src="food.img" alt="美食图片" width="100%">
                                     <div class="food_info">
                                         <div class="food_introduce">
-                                            <div class="food_name">{{item.name}}</div>
-                                            <p>{{item.text}}</p>
+                                            <div class="food_name">{{food.name}}</div>
+                                            <p>{{food.name}}</p>
                                         </div>
-                                        <div class="price">¥{{item.price}}</div>
+                                        <div class="price">¥{{food.price}}</div>
                                     </div> 
                                 </div>
                             </div>
@@ -34,8 +35,6 @@
                 </div>
             </div>
       </section>
-      
-      
   </div>
 </template>
 <script>
@@ -44,82 +43,34 @@ import {indexItem} from '@/api/api'
 export default {
   data() {
       return {
-        
+        banners:[],
+        types:[],
         picList:[
             {img:staticBannerImgPath + "1.jpeg", altstring:"banner1",id:"1"},
             {img:staticBannerImgPath + "2.jpeg",altstring:"banner2",id:"2"},
             {img:staticBannerImgPath + "3.jpeg",altstring:"banner3",id:"3"}
         ],
-        cakeList:[
-            {
-                name:'精品皮皮虾',
-                img:staticFoodImgPath + "cake/1.jpg",
-                altstring:'精品皮皮虾',
-                id: 1,
-                text:'来自澳洲的皮皮虾',
-                price:'69.9'
-            },
-            {
-                name:'精品皮皮虾',
-                img:staticFoodImgPath + "cake/2.jpg",
-                altstring:'精品皮皮虾',
-                id: 2,
-                text:'来自澳洲的皮皮虾',
-                price:'39.9'
-            },
-            {
-                name:'精品皮皮虾',
-                img:staticFoodImgPath + "cake/3.jpg",
-                altstring:'精品皮皮虾',
-                id: 3,
-                text:'来自澳洲的皮皮虾',
-                price:'59.9'
-            },
-            {
-                name:'精品皮皮虾',
-                img:staticFoodImgPath + "cake/4.jpg",
-                altstring:'精品皮皮虾',
-                id: 4,
-                text:'来自澳洲的皮皮虾',
-                price:'59.9'
-            },
-            {
-                name:'精品皮皮虾',
-                img:staticFoodImgPath + "cake/5.jpg",
-                altstring:'精品皮皮虾',
-                id: 5,
-                text:'来自澳洲的皮皮虾',
-                price:'59.9'
-            },
-            {
-                name:'精品皮皮虾',
-                img:staticFoodImgPath + "cake/6.jpg",
-                altstring:'精品皮皮虾',
-                id: 6,
-                text:'来自澳洲的皮皮虾',
-                price:'59.9'
-            }
-
-        ]
-        
-      };
+      }
     },
     created () {
         this.get_items();
     },
     methods: {
-      
-    //   view_detail(id){
-    //       console.log(id);
-    //       this.$router.push({name:'detail', params: { id: id}})
-    //   },
-      click_more(type){
-          this.$router.push({name:'list', params: { type: type}})
+      click_more(id){
+          this.$router.push({name:'list', params: { type_id: id}})
       },
       get_items(){
           indexItem().then(
               (resData) => {
-                  console.log(resData);
+                  if(resData.status == 'ok'){
+                      var Data = resData.data;
+                      this.banners = Data.banners;
+                      this.types = Data.types;
+                     
+                  }else{
+                      console.log('获取数据失败');
+                  }
+                  
               }
           )
       }
@@ -131,11 +82,9 @@ export default {
 
 <style lang="scss">
 @import url("../style/common.css");
-.home{
-    margin: 60px 0 0 0;
-}
+
 h3{
-    font-size: 1.2rem;
+    font-size: 1.3rem;
 }
 .content{
     background-color: #f2f2f2;
@@ -183,11 +132,13 @@ h3{
     }
    
    @media screen and (max-width: 600px){
+        
         .food_item {
             li{
                 width: 100%;
             }
        }
+       
    }
 }
 

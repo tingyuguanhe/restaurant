@@ -1,5 +1,5 @@
 <template>
-  <div class="layout_nav" ref="abc">
+  <div class="layout_nav" ref="layout">
       <div class="head_top">  
          
         <!-- <ul class="top clearfix"> -->
@@ -158,7 +158,7 @@ export default {
       handleScroll () {
         var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
         //console.log(scrollTop)
-        var offsetTop = this.$refs.abc.offsetHeight;
+        var offsetTop = this.$refs.layout.offsetHeight;
         //console.log(offsetTop);
         
         if (scrollTop > offsetTop && this.sys == 'pc') {
@@ -434,6 +434,9 @@ li.shopping_cart{
         top: 10px;
         right:-20px;
         color: #9c9c9c;
+    }
+    .layout_nav{
+        height: 60px;
     }
     .head_top{
         .top{

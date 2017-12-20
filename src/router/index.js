@@ -24,7 +24,7 @@ const indexBreadcrumb = {name: '首页', href: '/'};
           }
         },
         {
-          path: '/list/:type',
+          path: '/list/:type_id',
           name: 'list',
           component: list,
           meta:{

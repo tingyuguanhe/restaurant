@@ -4,4 +4,4 @@ import { fetch } from '@/api/index'
 export const indexItem = () => fetch('GET','/api/index/')
 
 //list
-export const listItem = () => fetch('GET','/api/q/')
+export const listItem = (param) => fetch('GET',`/api/q//?type_id=${param.id}`)

@@ -1,13 +1,13 @@
 <template>
   <div class="main_app">
     <nav-bar></nav-bar>
-    <div class="breadcrumb breadcrumb_source" v-if="!!$route.meta.breadcrumbs">
+    <!-- <div class="breadcrumb breadcrumb_source" v-if="!!$route.meta.breadcrumbs">
         <el-breadcrumb separator-class="el-icon-arrow-right">
             <el-breadcrumb-item v-for="(breadcrumb,index) in $route.meta.breadcrumbs" :to="breadcrumb.href" :key="index">
                 {{breadcrumb.name}}
             </el-breadcrumb-item>
         </el-breadcrumb>
-    </div>
+    </div> -->
     <transition name="fade" mode="out-in">
         <router-view></router-view>
     </transition>

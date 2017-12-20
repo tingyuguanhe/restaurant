@@ -1,34 +1,21 @@
 <template>
   <div class="list">
-      
       <div class="app_list_menu">
         <i class="el-icon-arrow-left pull-left" @click="go_history"></i>
         <el-menu :default-active="default_active_menu" mode="horizontal" class="pull-left el-menu-demo search_menu" 
                     active-text-color="#ff5900" @select="handleSelect"
                     @open="handleOpen" @close="handleClose">
-                <template v-for="(item,index) in list_menu" >
-                    <template  v-if="item.children.length == 0">
-                        <el-menu-item :index="item.index" :key="index">
-                            <span slot="title">{{item.name}}</span>
-                        </el-menu-item>
-                    </template>
-                    <template v-else>
-                        <el-submenu :index="item.index">
-                            <template slot="title">
-                                <i class="el-icon-location"></i>
-                                <span>{{item.name}}</span>
-                            </template>
-                            <el-menu-item-group v-for="(child,indx) in item.children">                     
-                                <el-menu-item :index="child.index" :key="index">{{child.name}}</el-menu-item>                                    
-                            </el-menu-item-group>
-                        </el-submenu>
-                    </template>    
+                <template v-for="item in types">              
+                    <el-menu-item :index="item.id.toString()" :key="item.id">
+                        <template slot="title">
+                            <span>{{item.name}}</span>
+                        </template>         
+                    </el-menu-item>     
                 </template>                    
             </el-menu>
         </div>
       <div class="main_content">
-      
-      <div class="list_filter_ul clearfix">
+      <!-- <div class="list_filter_ul clearfix">
           
               <el-row class="filter_items">
                   <el-col class="filter_bg" :span="2">
@@ -63,54 +50,44 @@
                   </el-col>
               </el-row>
          
-      </div>
+      </div> -->
       
-    <div class="">
+    <div class="pc_list">
         <el-row>
             <el-col class="pc_list_menu" :span="4">
                 <h5>类别：</h5>
                 <el-menu :default-active="default_active_menu" class="el-menu-vertical-demo search_menu" 
                 active-text-color="#ff5900" @select="handleSelect"
                 @open="handleOpen" @close="handleClose">
-
-                    <template v-for="(item,index) in list_menu" >
-                        <template  v-if="item.children.length == 0">
-                            <el-menu-item :index="item.index" :key="index">
+                    <template v-for="item in types">                      
+                        <el-menu-item :index="item.id.toString()" :key="item.id">
+                            <template slot="title">
                                 <i class="el-icon-menu"></i>
-                                <span slot="title">{{item.name}}</span>
-                            </el-menu-item>
-                        </template>
-                        <template v-else>
-                            <el-submenu :index="item.index">
-                                <template slot="title">
-                                    <i class="el-icon-location"></i>
-                                    <span>{{item.name}}</span>
-                                </template>
-                                <el-menu-item-group v-for="(child,indx) in item.children">                     
-                                    <el-menu-item :index="child.index" :key="index">{{child.name}}</el-menu-item>                                    
-                                </el-menu-item-group>
-                            </el-submenu>
-                        </template>    
+                                <span>{{item.name}}</span>
+                            </template>                           
+                        </el-menu-item>                      
                     </template>                    
                 </el-menu>
             </el-col>
             <el-col :span="19" :offset="1">
                 <el-row class="clearfix">
-                        <el-col :span="8" v-for="item in cakeList" :key="item.id">
-                            <div class="img_item">
-                                <div class="img_box">                             
-                                    <img :src="item.img" :alt="item.altstring" width="100%" alt="">
+                    <el-col :span="8" v-for="item in item_shops" :key="item.id">
+                        <div class="img_item">
+                            <div class="img_box">  
+                                <a :href="item.desc">                             
+                                    <img :src="item.img" alt="图片" width="100%">
                                     <div class="food_info">
                                         <div class="food_introduce">
                                             <div class="food_name">{{item.name}}</div>
-                                            <p>{{item.text}}</p>
+                                            <p>{{item.name}}</p>
                                         </div>
                                         <div class="price">¥{{item.price}}</div>
                                     </div> 
-                                </div>
+                                </a> 
                             </div>
-                        </el-col>
-                    </el-row> 
+                        </div>
+                    </el-col>               
+                </el-row> 
             </el-col>
         </el-row>
     </div>
@@ -119,7 +96,7 @@
 </template>
 <script>
 import {staticBannerImgPath,staticFoodImgPath} from '@/config'
-
+import {listItem} from '@/api/api'
 export default {
   data(){
       return {
@@ -129,51 +106,7 @@ export default {
           price: false,
           price_active: '',
           complex:false,
-          list_menu:[
-              {
-                  name:'精品糕点',
-                  index:'cake',
-                  type:'cake',
-                  id:'1',
-                  children:[
-                    //   {
-                    //       name:'奶油慕斯蛋糕',
-                    //       index:'1',
-                    //       type:'1',
-                    //       id:'1',
-                    //       title:'今日特价'
-                    //   },
-                    //   {
-                    //       name:'水果蛋糕',
-                    //       index:'2',
-                    //       type:'2',
-                    //       id:'2',
-                    //       title:'今日特价'
-                    //   },
-                    //   {
-                    //       name:'马卡龙',
-                    //       index:'3',
-                    //       type:'3',
-                    //       id:'3'
-                    //   }
-                  ]
-              },
-              {
-                  name:'饮料',
-                  index:'drink',
-                  type:'drink',
-                  id:'2',
-                  children:[]
-              },
-              {
-                  name:'超值套餐',
-                  index:'set_meal',
-                  type:'set_meal',
-                  id:'3',
-                  children:[]
-              }
-          ],
-          default_active_menu:'',
+          default_active_menu:'1',
           cakeList:[
             {
                 name:'精品皮皮虾',
@@ -224,21 +157,48 @@ export default {
                 price:'59.9'
             }
 
-        ]
+        ],
+        active_menu_id:'',
+        item_shops:[],
+        types:[]
+
       }
   },
-  mounted () {
-    this.default_active_menu = this.$route.params.type;
+  created(){
+    this.default_active_menu = this.$route.params.type_id;
+    console.log(this.default_active_menu);
+    this.get_list_items();
   },
   methods: {
     handleOpen(key, keyPath) {
-    console.log(key, keyPath);
+        console.log(key, keyPath);
     },
     handleClose(key, keyPath) {
-    console.log(key, keyPath);
+        console.log(key, keyPath);
     },
     handleSelect(key){
         console.log(key);
+        this.default_active_menu = key;
+        this.get_list_items();
+    },
+    get_list_items(){
+        var param = {
+            id: this.default_active_menu
+        }
+        listItem(param).then(
+            (resData) => {
+                if(resData && resData.status == 'ok'){
+                    var Data = resData.data;
+                    this.active_menu_id = Data.active.id;
+                    this.item_shops = Data.shops;
+                    this.types = Data.types;
+                  
+                }else{
+                    console.log('获取列表失败');
+                }
+                
+            }
+        )
     },
     sortBy(type){
         if(type == "sale"){
@@ -263,7 +223,9 @@ export default {
 @import url('../style/common.css');
 
 
-
+a:hover{
+    text-decoration: none;
+}
 h5{
     text-align:left;
     padding: 16px;
@@ -393,6 +355,9 @@ h5{
     display: none;
 }
 @media screen and (max-width:600px){
+    .main_content{
+        margin: 70px 0 0 0;
+    }
     .el-col-2{
         width: 16%;
     }
@@ -429,7 +394,9 @@ h5{
    .el-col-offset-1{
        margin-left: 0; 
    }
-  
+   .el-menu{
+       border: none;
+   }
    
 }
 
