@@ -19,15 +19,17 @@
                     <ul class="clearfix">
                         <li v-for="food in item.shops" :key="food.id">
                             <div class="img_item">
-                                <div class="img_box">                             
-                                    <img :src="food.img" alt="美食图片" width="100%">
-                                    <div class="food_info">
-                                        <div class="food_introduce">
-                                            <div class="food_name">{{food.name}}</div>
-                                            <p>{{food.name}}</p>
-                                        </div>
-                                        <div class="price">¥{{food.price}}</div>
-                                    </div> 
+                                <div class="img_box"> 
+                                    <a :href="food.url">                         
+                                        <img :src="food.img" alt="美食图片" width="100%">
+                                        <div class="food_info">
+                                            <div class="food_introduce">
+                                                <div class="food_name">{{food.name}}</div>
+                                                <p>{{food.name}}</p>
+                                            </div>
+                                            <div class="price">¥{{food.price}}</div>
+                                        </div> 
+                                    </a>   
                                 </div>
                             </div>
                         </li>
@@ -82,7 +84,9 @@ export default {
 
 <style lang="scss">
 @import url("../style/common.css");
-
+a:hover{
+    text-decoration: none;
+}
 h3{
     font-size: 1.3rem;
 }

@@ -74,7 +74,7 @@
                     <el-col :span="8" v-for="item in item_shops" :key="item.id">
                         <div class="img_item">
                             <div class="img_box">  
-                                <a :href="item.desc">                             
+                                <a :href="item.url">                             
                                     <img :src="item.img" alt="图片" width="100%">
                                     <div class="food_info">
                                         <div class="food_introduce">
