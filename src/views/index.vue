@@ -14,8 +14,8 @@
             <div class="content"> 
                 <img src="../../static/title/title1.jpg" alt="" width="100%">
                 <div class="food_item" v-for="item in types" :key="item.id">
-                    <h3>CAKE 糕点</h3>
-                    <div class="more_link"><a href="javascript:;" @click="click_more(item.id)">MORE+</a></div>
+                    <h3>{{ item.name }}</h3>
+                    <div class="more_link"><a href="javascript:;" @click="click_more(item.id)">查看更多</a></div>
                     <ul class="clearfix">
                         <li v-for="food in item.shops" :key="food.id">
                             <div class="img_item">
@@ -27,7 +27,7 @@
                                                 <div class="food_name">{{food.name}}</div>
                                                 <p>{{food.name}}</p>
                                             </div>
-                                            <div class="price">¥{{food.price}}</div>
+                                            <div class="price">{{food.price}}</div>
                                         </div> 
                                     </a>   
                                 </div>

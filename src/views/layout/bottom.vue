@@ -9,7 +9,7 @@
             <li><a href="javascript:;">联系我们</a></li>
         </ul>
         <div class="copy_right">
-            <span>&copy;2017 北京北京北京北京北京北京北京北京</span>
+            <span>&copy;2017 安徽凯浩物业管理有限公司</span>
             <span>All right reserved</span> 
         </div>
         <div class="back_top" v-if="back_top_show" @click="to_top">
