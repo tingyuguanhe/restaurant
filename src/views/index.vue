@@ -40,7 +40,7 @@
 </template>
 <script>
 import {staticBannerImgPath,staticFoodImgPath} from '@/config'
-
+import {indexItem} from '@/api/api'
 export default {
   data() {
       return {
@@ -104,8 +104,8 @@ export default {
         
       };
     },
-    components: {
-        
+    created () {
+        this.get_items();
     },
     methods: {
       
@@ -115,6 +115,13 @@ export default {
     //   },
       click_more(type){
           this.$router.push({name:'list', params: { type: type}})
+      },
+      get_items(){
+          indexItem().then(
+              (resData) => {
+                  console.log(resData);
+              }
+          )
       }
 
     }
@@ -175,6 +182,13 @@ h3{
         margin: 10px 20px;
     }
    
+   @media screen and (max-width: 600px){
+        .food_item {
+            li{
+                width: 100%;
+            }
+       }
+   }
 }
 
 
