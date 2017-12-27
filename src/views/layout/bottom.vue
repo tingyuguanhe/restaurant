@@ -1,7 +1,7 @@
 <template>
     <footer class="footer">
         <div class="erwei_code">
-            <img src="../../../static/wechat.jpeg" width="100%" alt="">
+            <img src="../../../static/wechat.jpg" width="100%" alt="">
         </div>
         <ul class="clearfix">
             <li><a href="javascript:;">关于我们</a></li>
