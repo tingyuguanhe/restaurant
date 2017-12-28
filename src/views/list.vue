@@ -165,8 +165,7 @@ export default {
       }
   },
   created(){
-    this.default_active_menu = this.$route.params.type_id;
-    console.log(this.default_active_menu);
+    this.default_active_menu = this.$route.params.type_id.toString();
     this.get_list_items();
   },
   methods: {
@@ -177,7 +176,7 @@ export default {
         console.log(key, keyPath);
     },
     handleSelect(key){
-        console.log(key);
+        
         this.default_active_menu = key;
         this.get_list_items();
     },

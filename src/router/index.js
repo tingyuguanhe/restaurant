@@ -9,6 +9,7 @@ const list =() => import('@/views/list')
 const indexBreadcrumb = {name: '首页', href: '/'};
 
  const router = new Router({
+  mode:'history',
   routes: [
     {
       path: '/',
